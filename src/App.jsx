@@ -16,7 +16,7 @@ const App = () => {
   };
 
   return (
-    <div className=" max-w-xl mx-auto p-4">
+    <div className="bg-yellow-200 max-w-xl mx-auto p-4">
       <Header />
       <Balance balance={getBalance()} />
       <History transactions={transactions} />
