@@ -16,7 +16,7 @@ const App = () => {
   };
 
   return (
-    <div className="bg-yellow-200 max-w-xl mx-auto p-4">
+    <div className="bg-yellow-200 max-w-xl mx-auto p-4 rounded-md">
       <Header />
       <Balance balance={getBalance()} />
       <History transactions={transactions} />
