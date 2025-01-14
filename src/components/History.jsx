@@ -4,7 +4,12 @@ const History = ({ transactions }) => {
       <h3 className="m-1">History</h3>
       <ul>
         {transactions.map((transaction) => (
-          <li className="bg-slate-200 m-1 rounded-md p-2" key={transaction.id}>
+            <li 
+            className={`m-1 rounded-md p-2 ${
+              transaction.amount < 0 ? 'bg-red-200' : 'bg-green-200'
+            }`} 
+            key={transaction.id}
+            >
             {transaction.description}{" "}
             <span>
               {transaction.amount > 0 ? "+" : ""}$
