@@ -8,19 +8,29 @@ const History = ({ transactions, onDelete, onEdit }) => {
   });
 
   const handleEdit = (transaction) => {
-    setEditingId(transaction.id);
-    setEditForm({
-      description: transaction.description,
-      amount: transaction.amount
-    });
+    if (editingId === null) {
+      setEditingId(transaction.id);
+      setEditForm({
+        description: transaction.description,
+        amount: transaction.amount,
+        id: transaction.id
+      });
+    }
   };
 
   const handleSave = (id) => {
     onEdit({
       ...editForm,
-      id: id
+      id: id,
+      amount: parseFloat(editForm.amount) // Ensure amount is a number
     });
     setEditingId(null);
+    setEditForm({ description: '', amount: 0 });
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditForm({ description: '', amount: 0 });
   };
 
   return (
@@ -47,7 +57,7 @@ const History = ({ transactions, onDelete, onEdit }) => {
                   <input
                     type="number"
                     value={editForm.amount}
-                    onChange={(e) => setEditForm({...editForm, amount: parseFloat(e.target.value)})}
+                    onChange={(e) => setEditForm({...editForm, amount: e.target.value})}
                     className="p-1 rounded w-24"
                     step="0.01"
                   />
@@ -60,7 +70,7 @@ const History = ({ transactions, onDelete, onEdit }) => {
                     Save
                   </button>
                   <button
-                    onClick={() => setEditingId(null)}
+                    onClick={handleCancel}
                     className="p-1 px-2 text-sm bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
                   >
                     Cancel

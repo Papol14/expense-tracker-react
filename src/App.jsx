@@ -45,7 +45,18 @@ const App = () => {
   };
 
   const editTransaction = (transaction) => {
-    setEditingTransaction(transaction);
+    if (editingTransaction && transaction.id === editingTransaction.id) {
+      // If we're updating an existing transaction
+      setTransactions(
+        transactions.map((t) =>
+          t.id === transaction.id ? transaction : t
+        )
+      );
+      setEditingTransaction(null);
+    } else {
+      // If we're starting to edit a transaction
+      setEditingTransaction(transaction);
+    }
   };
 
   const getBalance = () => {
