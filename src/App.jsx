@@ -1,8 +1,27 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Header from "./components/Header";
 import Balance from "./components/Balance";
 import History from "./components/History";
 import TransactionForm from "./components/TransactionForm";
+import About from "./pages/About";
+
+const HomePage = ({ transactions, deleteTransaction, editTransaction, addTransaction, editingTransaction, getBalance }) => {
+  return (
+    <>
+      <Balance balance={getBalance()} />
+      <History 
+        transactions={transactions} 
+        onDelete={deleteTransaction}
+        onEdit={editTransaction}
+      />
+      <TransactionForm 
+        addTransaction={addTransaction} 
+        editingTransaction={editingTransaction}
+      />
+    </>
+  );
+};
 
 const App = () => {
   const [transactions, setTransactions] = useState([]);
@@ -10,7 +29,6 @@ const App = () => {
 
   const addTransaction = (transaction) => {
     if (editingTransaction) {
-      // Update existing transaction
       setTransactions(
         transactions.map((t) =>
           t.id === editingTransaction.id ? transaction : t
@@ -18,7 +36,6 @@ const App = () => {
       );
       setEditingTransaction(null);
     } else {
-      // Add new transaction
       setTransactions([transaction, ...transactions]);
     }
   };
@@ -36,19 +53,38 @@ const App = () => {
   };
 
   return (
-    <div className="bg-yellow-200 max-w-xl mx-auto p-4 rounded-md">
-      <Header />
-      <Balance balance={getBalance()} />
-      <History 
-        transactions={transactions} 
-        onDelete={deleteTransaction}
-        onEdit={editTransaction}
-      />
-      <TransactionForm 
-        addTransaction={addTransaction} 
-        editingTransaction={editingTransaction}
-      />
-    </div>
+    <Router>
+      <div className="bg-yellow-200 max-w-xl mx-auto p-4 rounded-md">
+        <Header />
+        <nav className="mb-4">
+          <ul className="flex gap-4 justify-center">
+            <li>
+              <Link to="/" className="text-blue-600 hover:text-blue-800">Home</Link>
+            </li>
+            <li>
+              <Link to="/about" className="text-blue-600 hover:text-blue-800">About</Link>
+            </li>
+          </ul>
+        </nav>
+        
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <HomePage 
+                transactions={transactions}
+                deleteTransaction={deleteTransaction}
+                editTransaction={editTransaction}
+                addTransaction={addTransaction}
+                editingTransaction={editingTransaction}
+                getBalance={getBalance}
+              />
+            } 
+          />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
