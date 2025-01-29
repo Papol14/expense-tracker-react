@@ -6,7 +6,18 @@ import History from "./components/History";
 import TransactionForm from "./components/TransactionForm";
 import About from "./pages/About";
 
-const HomePage = ({ transactions, deleteTransaction, editTransaction, addTransaction, editingTransaction, getBalance }) => {
+const HomePage = ({ 
+  transactions, 
+  deleteTransaction, 
+  editTransaction, 
+  addTransaction, 
+  editingTransaction,
+  editForm,
+  handleEditFormChange,
+  handleSave,
+  handleCancel,
+  getBalance 
+}) => {
   return (
     <>
       <Balance balance={getBalance()} />
@@ -14,6 +25,11 @@ const HomePage = ({ transactions, deleteTransaction, editTransaction, addTransac
         transactions={transactions} 
         onDelete={deleteTransaction}
         onEdit={editTransaction}
+        editForm={editForm}
+        onEditFormChange={handleEditFormChange}
+        onSave={handleSave}
+        onCancel={handleCancel}
+        editingTransaction={editingTransaction}
       />
       <TransactionForm 
         addTransaction={addTransaction} 
@@ -29,12 +45,41 @@ const App = () => {
     return savedTransactions ? JSON.parse(savedTransactions) : [];
   });
   const [editingTransaction, setEditingTransaction] = useState(null);
+  const [editForm, setEditForm] = useState({
+    description: '',
+    amount: 0
+  });
 
-  // Save to localStorage whenever transactions change
   useEffect(() => {
     localStorage.setItem('transactions', JSON.stringify(transactions));
   }, [transactions]);
 
+  const handleEditFormChange = (field, value) => {
+    setEditForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSave = (id) => {
+    const updatedTransaction = {
+      ...editForm,
+      id: id,
+      amount: parseFloat(editForm.amount)
+    };
+    setTransactions(
+      transactions.map((t) =>
+        t.id === id ? updatedTransaction : t
+      )
+    );
+    setEditingTransaction(null);
+    setEditForm({ description: '', amount: 0 });
+  };
+
+  const handleCancel = () => {
+    setEditingTransaction(null);
+    setEditForm({ description: '', amount: 0 });
+  };
 
   const addTransaction = (transaction) => {
     if (editingTransaction) {
@@ -54,18 +99,11 @@ const App = () => {
   };
 
   const editTransaction = (transaction) => {
-    if (editingTransaction && transaction.id === editingTransaction.id) {
-      // If we're updating an existing transaction
-      setTransactions(
-        transactions.map((t) =>
-          t.id === transaction.id ? transaction : t
-        )
-      );
-      setEditingTransaction(null);
-    } else {
-      // If we're starting to edit a transaction
-      setEditingTransaction(transaction);
-    }
+    setEditingTransaction(transaction);
+    setEditForm({
+      description: transaction.description,
+      amount: transaction.amount
+    });
   };
 
   const getBalance = () => {
@@ -74,38 +112,42 @@ const App = () => {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 p-8">
-        <div className="max-w-xl mx-auto backdrop-blur-lg bg-white/30 p-6 rounded-xl shadow-xl border border-white/30">
+      <div className="min-h-screen bg-gradient-to-br from-blue-500 via-yellow-500 to-red-500 p-4 sm:p-8">
+        <div className="w-full max-w-xl mx-auto backdrop-blur-lg bg-white/30 p-4 sm:p-6 rounded-xl shadow-xl border border-white/30">
           <Header />
-          <nav className="mb-6">
-            <ul className="flex gap-6 justify-center">
+          <nav className="mb-4 sm:mb-6">
+            <ul className="flex gap-4 sm:gap-6 justify-center p-4">
               <li>
-                <Link to="/" className="text-white hover:text-gray-200 transition-colors font-semibold">Home</Link>
+                <Link to="/" className="bg-blue-400 p-2 rounded-md text-white hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base">Home</Link>
               </li>
               <li>
-                <Link to="/about" className="text-white hover:text-gray-200 transition-colors font-semibold">About</Link>
+                <Link to="/about" className="bg-blue-400 p-2 rounded-md text-white hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base">About</Link>
               </li>
             </ul>
           </nav>
           
-            <Routes>
+          <Routes>
             <Route 
               path="/" 
               element={
-              <HomePage 
-                transactions={transactions}
-                deleteTransaction={deleteTransaction}
-                editTransaction={editTransaction}
-                addTransaction={addTransaction}
-                editingTransaction={editingTransaction}
-                getBalance={getBalance}
-              />
+                <HomePage 
+                  transactions={transactions}
+                  deleteTransaction={deleteTransaction}
+                  editTransaction={editTransaction}
+                  addTransaction={addTransaction}
+                  editingTransaction={editingTransaction}
+                  editForm={editForm}
+                  handleEditFormChange={handleEditFormChange}
+                  handleSave={handleSave}
+                  handleCancel={handleCancel}
+                  getBalance={getBalance}
+                />
               } 
             />
             <Route path="/about" element={<About />} />
-            </Routes>
-          </div>
-          </div>
+          </Routes>
+        </div>
+      </div>
         </Router>
   );
 };
