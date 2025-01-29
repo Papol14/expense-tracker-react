@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Header from "./components/Header";
 import Balance from "./components/Balance";
@@ -24,8 +24,17 @@ const HomePage = ({ transactions, deleteTransaction, editTransaction, addTransac
 };
 
 const App = () => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(() => {
+    const savedTransactions = localStorage.getItem('transactions');
+    return savedTransactions ? JSON.parse(savedTransactions) : [];
+  });
   const [editingTransaction, setEditingTransaction] = useState(null);
+
+  // Save to localStorage whenever transactions change
+  useEffect(() => {
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+  }, [transactions]);
+
 
   const addTransaction = (transaction) => {
     if (editingTransaction) {
