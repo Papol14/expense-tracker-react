@@ -74,20 +74,21 @@ const App = () => {
 
   return (
     <Router>
-      <div className="bg-yellow-200 max-w-xl mx-auto p-4 rounded-md">
-        <Header />
-        <nav className="mb-4">
-          <ul className="flex gap-4 justify-center">
-            <li>
-              <Link to="/" className="text-blue-600 hover:text-blue-800">Home</Link>
-            </li>
-            <li>
-              <Link to="/about" className="text-blue-600 hover:text-blue-800">About</Link>
-            </li>
-          </ul>
-        </nav>
-        
-        <Routes>
+      <div className="min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 p-8">
+        <div className="max-w-xl mx-auto backdrop-blur-lg bg-white/30 p-6 rounded-xl shadow-xl border border-white/30">
+          <Header />
+          <nav className="mb-6">
+            <ul className="flex gap-6 justify-center">
+              <li>
+                <Link to="/" className="text-white hover:text-gray-200 transition-colors font-semibold">Home</Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-white hover:text-gray-200 transition-colors font-semibold">About</Link>
+              </li>
+            </ul>
+          </nav>
+          
+          <Routes>
           <Route 
             path="/" 
             element={

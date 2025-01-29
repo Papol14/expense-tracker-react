@@ -29,7 +29,7 @@ const TransactionForm = ({ addTransaction }) => {
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="description" className="mb-1 font-medium">
-            Text
+            Name
           </label>
           <input
             type="text"
