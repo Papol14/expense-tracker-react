@@ -88,10 +88,10 @@ const App = () => {
             </ul>
           </nav>
           
-          <Routes>
-          <Route 
-            path="/" 
-            element={
+            <Routes>
+            <Route 
+              path="/" 
+              element={
               <HomePage 
                 transactions={transactions}
                 deleteTransaction={deleteTransaction}
@@ -100,12 +100,13 @@ const App = () => {
                 editingTransaction={editingTransaction}
                 getBalance={getBalance}
               />
-            } 
-          />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </div>
-    </Router>
+              } 
+            />
+            <Route path="/about" element={<About />} />
+            </Routes>
+          </div>
+          </div>
+        </Router>
   );
 };
 
