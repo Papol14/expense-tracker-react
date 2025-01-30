@@ -5,24 +5,26 @@ import Balance from "./components/Balance";
 import History from "./components/History";
 import TransactionForm from "./components/TransactionForm";
 import About from "./pages/About";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const HomePage = ({ 
-  transactions, 
-  deleteTransaction, 
-  editTransaction, 
-  addTransaction, 
+const HomePage = ({
+  transactions,
+  deleteTransaction,
+  editTransaction,
+  addTransaction,
   editingTransaction,
   editForm,
   handleEditFormChange,
   handleSave,
   handleCancel,
-  getBalance 
+  getBalance,
 }) => {
   return (
     <>
       <Balance balance={getBalance()} />
-      <History 
-        transactions={transactions} 
+      <History
+        transactions={transactions}
         onDelete={deleteTransaction}
         onEdit={editTransaction}
         editForm={editForm}
@@ -31,8 +33,8 @@ const HomePage = ({
         onCancel={handleCancel}
         editingTransaction={editingTransaction}
       />
-      <TransactionForm 
-        addTransaction={addTransaction} 
+      <TransactionForm
+        addTransaction={addTransaction}
         editingTransaction={editingTransaction}
       />
     </>
@@ -41,23 +43,23 @@ const HomePage = ({
 
 const App = () => {
   const [transactions, setTransactions] = useState(() => {
-    const savedTransactions = localStorage.getItem('transactions');
+    const savedTransactions = localStorage.getItem("transactions");
     return savedTransactions ? JSON.parse(savedTransactions) : [];
   });
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [editForm, setEditForm] = useState({
-    description: '',
-    amount: 0
+    description: "",
+    amount: 0,
   });
 
   useEffect(() => {
-    localStorage.setItem('transactions', JSON.stringify(transactions));
+    localStorage.setItem("transactions", JSON.stringify(transactions));
   }, [transactions]);
 
   const handleEditFormChange = (field, value) => {
-    setEditForm(prev => ({
+    setEditForm((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -65,20 +67,20 @@ const App = () => {
     const updatedTransaction = {
       ...editForm,
       id: id,
-      amount: parseFloat(editForm.amount)
+      amount: parseFloat(editForm.amount),
     };
     setTransactions(
-      transactions.map((t) =>
-        t.id === id ? updatedTransaction : t
-      )
+      transactions.map((t) => (t.id === id ? updatedTransaction : t))
     );
     setEditingTransaction(null);
-    setEditForm({ description: '', amount: 0 });
+    setEditForm({ description: "", amount: 0 });
+    toast.success("Transaction updated successfully!");
   };
 
   const handleCancel = () => {
     setEditingTransaction(null);
-    setEditForm({ description: '', amount: 0 });
+    setEditForm({ description: "", amount: 0 });
+    toast.info("Edit canceled.");
   };
 
   const addTransaction = (transaction) => {
@@ -89,21 +91,25 @@ const App = () => {
         )
       );
       setEditingTransaction(null);
+      toast.success("Transaction updated successfully!");
     } else {
       setTransactions([transaction, ...transactions]);
+      toast.success("Transaction added successfully!");
     }
   };
 
   const deleteTransaction = (id) => {
     setTransactions(transactions.filter((t) => t.id !== id));
+    toast.error("Transaction deleted.");
   };
 
   const editTransaction = (transaction) => {
     setEditingTransaction(transaction);
     setEditForm({
       description: transaction.description,
-      amount: transaction.amount
+      amount: transaction.amount,
     });
+    toast.info("Editing transaction...");
   };
 
   const getBalance = () => {
@@ -118,19 +124,30 @@ const App = () => {
           <nav className="mb-4 sm:mb-6">
             <ul className="flex gap-4 sm:gap-6 justify-center p-4">
               <li>
-                <Link to="/" className="bg-blue-400 p-2 rounded-md text-white hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base">Home</Link>
+                <Link
+                  to="/"
+                  className="bg-blue-400 p-2 rounded-md text-white hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base"
+                >
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/about" className="bg-blue-400 p-2 rounded-md text-white hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base">About</Link>
+                <Link
+                  to="/about"
+                  className="bg-blue-400 p-2 rounded-md text-white hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base"
+                >
+                  About
+                </Link>
               </li>
             </ul>
+            <ToastContainer />
           </nav>
-          
+
           <Routes>
-            <Route 
-              path="/" 
+            <Route
+              path="/"
               element={
-                <HomePage 
+                <HomePage
                   transactions={transactions}
                   deleteTransaction={deleteTransaction}
                   editTransaction={editTransaction}
@@ -142,13 +159,13 @@ const App = () => {
                   handleCancel={handleCancel}
                   getBalance={getBalance}
                 />
-              } 
+              }
             />
             <Route path="/about" element={<About />} />
           </Routes>
         </div>
       </div>
-        </Router>
+    </Router>
   );
 };
 
