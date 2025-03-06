@@ -25,9 +25,10 @@ const About = () => {
 					Positive amounts represent income, while negative amounts represent expenses.
 					You can edit or delete any transaction from the history section.
 				</p>
+
 				<h2 className="text-center text-xl font-semibold mt-5 mb-2">Honorable Mention</h2>
-			  <img src="./assets/horse.png" alt="Horse" className="w-1/2 mx-auto" />
-			  <i className="text-center block">Kabayong nakaupo</i>
+				<img src="/horse.png" alt="Horse" className="w-1/2 mx-auto" />
+				<i className="text-center block">Kabayong nakaupo</i>
 			</div>
 
 			<div className="text-center text-gray-600 mt-4">
