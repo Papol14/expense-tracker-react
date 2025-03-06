@@ -1,3 +1,5 @@
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
+
 const History = ({ 
   transactions, 
   onDelete, 
@@ -70,15 +72,17 @@ const History = ({
                   <div className="flex gap-2 justify-end">
                     <button
                       onClick={() => onEdit(transaction)}
-                      className="p-2 px-3 sm:px-4 text-xs sm:text-sm bg-blue-500/80 hover:bg-blue-600/80 text-white rounded-lg backdrop-blur-sm transition-colors"
+                      className="p-2 text-xs sm:text-sm bg-blue-500/80 hover:bg-blue-600/80 text-white rounded-lg backdrop-blur-sm transition-colors"
+                      title="Edit transaction"
                     >
-                      Edit
+                      <FiEdit2 className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onDelete(transaction.id)}
-                      className="p-2 px-3 sm:px-4 text-xs sm:text-sm bg-red-500/80 hover:bg-red-600/80 text-white rounded-lg backdrop-blur-sm transition-colors"
+                      className="p-2 text-xs sm:text-sm bg-red-500/80 hover:bg-red-600/80 text-white rounded-lg backdrop-blur-sm transition-colors"
+                      title="Delete transaction"
                     >
-                      Delete
+                      <FiTrash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -89,7 +93,6 @@ const History = ({
       )}
     </div>
   );
-
 };
 
 export default History;
