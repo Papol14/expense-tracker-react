@@ -119,14 +119,14 @@ const App = () => {
   return (
     <Router>
       <div className="min-h-screen bg-gradient-to-br from-blue-500 via-yellow-500 to-red-500 p-4 sm:p-8">
-        <div className="w-full max-w-xl mx-auto backdrop-blur-lg bg-white/30 p-4 sm:p-6 rounded-xl shadow-xl border border-white/30">
+        <div className="w-full max-w-xl mx-auto backdrop-blur-lg bg-white/60 p-4 sm:p-6 rounded-xl shadow-xl border border-white/30">
           <Header />
           <nav className="mb-4 sm:mb-6">
             <ul className="flex gap-4 sm:gap-6 justify-center p-4">
               <li>
                 <Link
                   to="/"
-                  className="bg-blue-400 p-2 rounded-md text-white hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base"
+                  className="bg-blue-400 p-2 rounded-md  hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base"
                 >
                   Home
                 </Link>
@@ -134,13 +134,12 @@ const App = () => {
               <li>
                 <Link
                   to="/about"
-                  className="bg-blue-400 p-2 rounded-md text-white hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base"
+                  className="bg-blue-400 p-2 rounded-md  hover:text-gray-200 transition-colors font-semibold text-sm sm:text-base"
                 >
                   About
                 </Link>
               </li>
             </ul>
-            <ToastContainer />
           </nav>
 
           <Routes>
@@ -165,6 +164,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
+      <ToastContainer />
     </Router>
   );
 };

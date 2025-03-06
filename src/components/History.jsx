@@ -10,9 +10,9 @@ const History = ({
 }) => {
   return (
     <div className="backdrop-blur-md bg-white/20 p-4 sm:p-6 rounded-xl shadow-lg border border-white/30">
-      <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">History</h3>
+      <h3 className="text-lg sm:text-xl font-semibold  mb-3 sm:mb-4">History</h3>
       {transactions.length === 0 ? (
-        <div className="text-white text-center py-3 sm:py-4 backdrop-blur-sm bg-white/10 rounded-lg text-sm sm:text-base">
+        <div className=" text-center py-3 sm:py-4 backdrop-blur-sm bg-white/60 rounded-lg text-sm sm:text-base">
           No records found
         </div>
       ) : (
@@ -61,10 +61,10 @@ const History = ({
                 </div>
               ) : (
                 <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-3 sm:items-center">
-                  <div className="text-white text-sm sm:text-base">
+                  <div className=" text-sm sm:text-base">
                     <span className="font-medium">{transaction.description}</span>
                     <span className="ml-2 font-semibold">
-                      {transaction.amount > 0 ? "+" : ""}${transaction.amount.toFixed(2)}
+                      {transaction.amount > 0 ? "+" : ""}${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                   </div>
                   <div className="flex gap-2 justify-end">
