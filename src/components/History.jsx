@@ -66,7 +66,7 @@ const History = ({
                   <div className=" text-sm sm:text-base">
                     <span className="font-medium">{transaction.description}</span>
                     <span className="ml-2 font-semibold">
-                      {transaction.amount > 0 ? "+" : ""}${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      {transaction.amount > 0 ? "+" : ""}₱{transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                   </div>
                   <div className="flex gap-2 justify-end">

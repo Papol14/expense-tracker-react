@@ -5,7 +5,7 @@ const Balance = ({ balance }) => {
       <h3 className={`text-2xl sm:text-3xl font-bold ${
         balance < 0 ? 'text-red-400' : 'text-green-400'
       } transition-colors`}>
-        ${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        ₱{balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </h3>
     </div>
   );
